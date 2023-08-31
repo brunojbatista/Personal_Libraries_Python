@@ -1,8 +1,9 @@
 # from DriverInterface import DriverInterface
-from Library_v1.Driver_v1.DriverInterface import DriverInterface
-from Library_v1.Driver_v1.DriverLock import DriverLock
+from Library_v1.Driver.DriverInterface import DriverInterface
+from Library_v1.Driver.DriverLock import DriverLock
 
 from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,12 +14,12 @@ import os
 import sys
 import re
 
-from Library_v1.Utils_v1.file import (
+from Library_v1.Utils.file import (
     get_script_path,
     edit_chromedriver,
 )
 
-from Library_v1.Directory_v1.Directory import Directory
+from Library_v1.Directory.Directory import Directory
 
 # def get_script_path():
 #     return os.path.dirname(os.path.realpath(sys.argv[0]))
@@ -97,7 +98,7 @@ class ChromeDriver(DriverInterface):
         # -------------------------------------------------
         # Abrindo a instância do webdriver
         self.driver = Chrome(
-            executable_path=filepath, 
+            service=ChromeService(ChromeDriverManager().install()), 
             options=self.options
         )
 

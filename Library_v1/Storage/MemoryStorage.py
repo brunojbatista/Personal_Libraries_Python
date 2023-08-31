@@ -1,7 +1,7 @@
 import json
 import re
 import os
-from Library_v1.Storage_v1.StorageInterface import StorageInterface
+from Library_v1.Storage.StorageInterface import StorageInterface
 
 class MemoryStorage(StorageInterface):
     def __init__(self):

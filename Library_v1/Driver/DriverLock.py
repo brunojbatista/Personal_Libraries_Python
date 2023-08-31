@@ -1,6 +1,6 @@
 from filelock import Timeout, FileLock
 
-from Library_v1.Utils_v1.file import (
+from Library_v1.Utils.file import (
     get_relative_full_path,
     separator,
 )

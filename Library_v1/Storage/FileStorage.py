@@ -1,6 +1,6 @@
 from filelock import Timeout, FileLock
 from filelock._error import Timeout
-from Library_v1.Storage_v1.StorageInterface import StorageInterface
+from Library_v1.Storage.StorageInterface import StorageInterface
 import os
 import time;
 

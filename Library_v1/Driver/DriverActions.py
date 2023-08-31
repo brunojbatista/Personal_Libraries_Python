@@ -1,6 +1,6 @@
 # from DriverInterface import DriverInterface
-from Library_v1.Driver_v1.DriverInterface import DriverInterface
-# from Library_v1.Driver_v1.DriverInterface import DriverInterface
+from Library_v1.Driver.DriverInterface import DriverInterface
+# from Library_v1.Driver.DriverInterface import DriverInterface
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -9,16 +9,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 
 
-from Library_v1.Driver_v1.custom_ec.ec_changes_text import ec_changes_text
-from Library_v1.Driver_v1.custom_ec.ec_changes_url import ec_changes_url
-from Library_v1.Driver_v1.custom_ec.ec_has_attribute import ec_has_attribute
-from Library_v1.Driver_v1.custom_ec.ec_no_attribute import ec_no_attribute
-from Library_v1.Driver_v1.custom_ec.ec_changes_element import ec_changes_element
-from Library_v1.Driver_v1.custom_ec.ec_has_element import ec_has_element
-from Library_v1.Driver_v1.custom_ec.ec_has_no_element import ec_has_no_element
-from Library_v1.Driver_v1.custom_ec.ec_disappear_element import ec_disappear_element
-from Library_v1.Driver_v1.custom_ec.ec_match_text_i import ec_match_text_i
-from Library_v1.Driver_v1.custom_ec.ec_remove_text_by_backspace import ec_remove_text_by_backspace
+from Library_v1.Driver.custom_ec.ec_changes_text import ec_changes_text
+from Library_v1.Driver.custom_ec.ec_changes_url import ec_changes_url
+from Library_v1.Driver.custom_ec.ec_has_attribute import ec_has_attribute
+from Library_v1.Driver.custom_ec.ec_no_attribute import ec_no_attribute
+from Library_v1.Driver.custom_ec.ec_changes_element import ec_changes_element
+from Library_v1.Driver.custom_ec.ec_has_element import ec_has_element
+from Library_v1.Driver.custom_ec.ec_has_no_element import ec_has_no_element
+from Library_v1.Driver.custom_ec.ec_disappear_element import ec_disappear_element
+from Library_v1.Driver.custom_ec.ec_match_text_i import ec_match_text_i
+from Library_v1.Driver.custom_ec.ec_remove_text_by_backspace import ec_remove_text_by_backspace
 
 from selenium.webdriver.support.expected_conditions import (
     visibility_of_element_located,
@@ -37,12 +37,12 @@ from selenium.common.exceptions import (
     ElementNotInteractableException,
 )
 
-from Library_v1.Utils_v1.file import (
+from Library_v1.Utils.file import (
     download,
     delete_folder,
 )
 
-from Library_v1.Utils_v1.string import (
+from Library_v1.Utils.string import (
     clear_accents,
 )
 

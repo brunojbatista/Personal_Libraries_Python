@@ -3,7 +3,7 @@ from sys import flags
 from datetime import datetime, timedelta, date, timezone
 import re
 
-from Library_v1.Utils_v1.string import default_space
+from Library_v1.Utils.string import default_space
 
 import math
 

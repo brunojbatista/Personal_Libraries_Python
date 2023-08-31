@@ -1,9 +1,9 @@
-from Library_v1.Excel_v1.BaseOperationExcel import BaseOperationExcel
-from Library_v1.Excel_v1.ReadingExcel import ReadingExcel
-from Library_v1.Excel_v1.ColumnPositionExcel import ColumnPositionExcel
-from Library_v1.Excel_v1.RowPositionExcel import RowPositionExcel
-from Library_v1.Excel_v1.SaveExcel import SaveExcel
-from Library_v1.Excel_v1.RowExcel import RowExcel
+from Library_v1.Excel.BaseOperationExcel import BaseOperationExcel
+from Library_v1.Excel.ReadingExcel import ReadingExcel
+from Library_v1.Excel.ColumnPositionExcel import ColumnPositionExcel
+from Library_v1.Excel.RowPositionExcel import RowPositionExcel
+from Library_v1.Excel.SaveExcel import SaveExcel
+from Library_v1.Excel.RowExcel import RowExcel
 
 class StructExcel():
     def __init__(self) -> None:

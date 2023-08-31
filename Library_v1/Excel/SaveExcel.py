@@ -1,5 +1,5 @@
-import Library_v1.Excel_v1.StructExcel as Struct
-from Library_v1.Directory_v1.Directory import Directory
+import Library_v1.Excel.StructExcel as Struct
+from Library_v1.Directory.Directory import Directory
 
 import re
 import pandas as pd

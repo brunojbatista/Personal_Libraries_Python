@@ -1,12 +1,12 @@
 import pandas as pd
 
 import re;
-from Library_v1.Utils_v1.string import (
+from Library_v1.Utils.string import (
     clear_accents,
     default_lower,
 )
 
-from Library_v1.Directory_v1.Directory import Directory
+from Library_v1.Directory.Directory import Directory
 
 def get_content_excel(filepath_excel, start_row: int = 0):
     reading = {
