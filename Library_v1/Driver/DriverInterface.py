@@ -11,6 +11,10 @@ class DriverInterface(ABC):
         raise NotImplementedError
     
     @abstractmethod
+    def get_download_relativepath(self, ) -> str:
+        raise NotImplementedError
+    
+    @abstractmethod
     def find_download_file(self, searched_name, path = None):
         raise NotImplementedError
 

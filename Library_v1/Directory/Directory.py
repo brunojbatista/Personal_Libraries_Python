@@ -13,6 +13,7 @@ class Directory():
 
     def __init__(self, path: str = "."):
         self.path = Directory.set_default_path(path);
+        self.relativepath = None;
         self.fullpath = None;
         self.set_path();
 
@@ -27,6 +28,9 @@ class Directory():
 
     def get_path(self, ):
         return self.fullpath;
+
+    def get_relativepath(self, ):
+        return self.path
 
     def separator(path):
         return os.sep.join(re.split(r"[\/\\]+", path));

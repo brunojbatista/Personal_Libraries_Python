@@ -32,6 +32,9 @@ def download(url: str, filename: str, relative_path: str = ''):
 def delete_folder(path: str):
     return shutil.rmtree(path)
 
+def delete_file(path: str):
+    return os.remove(path)
+
 def move_file(current_path: str, new_path: str):
     return Path(current_path).rename(new_path)
 

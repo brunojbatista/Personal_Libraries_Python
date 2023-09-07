@@ -34,6 +34,7 @@ class ChromeDriver(DriverInterface):
         self.options_browser = {}
         self.options = None
         self.download_path = None
+        self.download_relativepath = None
         self.driver_lock = DriverLock()
         self.set_download_path(download_path)
         self.initialize_options()
@@ -54,9 +55,13 @@ class ChromeDriver(DriverInterface):
         download = Directory(download_path)
         download.create()
         self.download_path = download.get_path()
+        self.download_relativepath = download.get_relativepath()
     
     def get_download_path(self, ) -> str:
         return self.download_path
+    
+    def get_download_relativepath(self, ) -> str:
+        return self.download_relativepath
     
     def find_download_file(self, searched_name, path = None):
         download = Directory(self.download_path)
@@ -73,7 +78,7 @@ class ChromeDriver(DriverInterface):
 
         # -------------------------------------------------
         # Buscando do webdriver do chrome
-        d = Directory("Library/Driver/browsers/chrome/current")
+        d = Directory("Library_v1/Driver/browsers/chrome/current")
         filepath = d.find_file(f"\.exe$");
         if filepath is None: raise ValueError("Não foi encontrado o webdriver do google chrome")
 

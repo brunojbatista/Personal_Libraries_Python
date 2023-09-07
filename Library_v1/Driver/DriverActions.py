@@ -62,7 +62,9 @@ from time import sleep;
 
 # def get_custom_path(relative_path: str):
 #     folders = re.split(r"[\/\\]", re.sub(r"(^\s*\\+|^\s*\/+)", '', relative_path))
-#     return re.sub(r"(\\+\s*$|\/+\s*$)", '', os.path.join(get_script_path(), *folders))
+#     return re.sub(r"(\\+\s*$|\/+\s*$)", '', os.path.join(get_script_path(), *folders))]
+
+from Library_v1.Directory.Directory import Directory
 
 class DriverActions():
 
@@ -73,6 +75,12 @@ class DriverActions():
     
     def get_driver(self, ) -> DriverInterface:
         return self.driver
+    
+    def get_download_path(self, ) -> str:
+        return self.driver.get_download_path()
+
+    def get_download_relativepath(self, ) -> str:
+        return self.driver.get_download_relativepath()
 
     def sleep(self, time: float, offset_max: float = 0):
         timing = self.generate_random(time, offset_max)
@@ -367,9 +375,22 @@ class DriverActions():
             except ElementNotInteractableException:
                 attempts -= 1;
                 
-        if not has_finished: raise ValueError("A tentativa de forçar o clique passou não funcionou")
+        if not has_finished: raise ValueError("A tentativa de forçar o clique não funcionou")
 
-    ElementNotInteractableException
+    def force_write_element(self, xpath_or_webelement: str|WebElement, time: int = 60):
+        attempts = 60
+        has_finished = False
+        while True:
+            if attempts <= 0: break;
+            try:
+                self.sleep(1)
+                self.write_element(xpath_or_webelement, time)
+                has_finished = True;
+                break;
+            except ElementNotInteractableException:
+                attempts -= 1;
+                
+        if not has_finished: raise ValueError("A tentativa de escrever não funcionou")
     
     # ==========================================================================================
     # Comportamentos como humano
@@ -383,3 +404,8 @@ class DriverActions():
         action.perform();
 
     # def clear_like_human(self, ):
+
+    # Movendo um elemento para dentro do outro
+    def drag_and_drop_element(self, drag_el: WebElement, drop_el: WebElement):
+        ActionChains(self.driver.get()).drag_and_drop(drag_el, drop_el).perform()
+        return self;
