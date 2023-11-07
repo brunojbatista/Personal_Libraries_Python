@@ -4,6 +4,11 @@ import re;
 import urllib.request;
 from pathlib import Path
 import shutil
+import time;
+from Library_v1.Utils.string import (
+    clear_accents,
+    default_lower,
+)
 
 """
     Implementar uma função para buscar os arquivos dentro do diretório através de regex
@@ -25,6 +30,7 @@ class Directory():
 
     def set_path(self, ):
         if self.is_dir(): self.fullpath = os.path.realpath(self.path);
+        print(f"self.fullpath: {self.fullpath}")
 
     def get_path(self, ):
         return self.fullpath;
@@ -40,8 +46,13 @@ class Directory():
         self.set_path();
 
     def delete(self, ) -> bool:
-        shutil.rmtree(self.path)
+        shutil.rmtree(self.fullpath)
         self.fullpath = None;
+        return True;
+
+    def delete_files(self, ) -> bool:
+        filepaths = self.find_files(r".*");
+        for filepath in filepaths: os.remove(filepath);
         return True;
 
     def is_dir(self, ) -> bool:
@@ -97,6 +108,25 @@ class Directory():
                 if re.search(search_regex, file, flags=re.I):
                     filepaths.append(os.path.realpath(Directory.separator(f"{path}/{file}")))
         return filepaths;
+
+    def find_filenames(self, search_regex, path = None):
+        filepaths = self.find_files(search_regex, path)
+        filenames = [re.sub(r".*(\\|\/)", '', x) for x in filepaths]
+        return filenames
+    
+    def wait_filename(self, waiting_function: callable, path = None, attempts: int = 60):
+        print("="*80)
+        print(">> wait_filename:")
+        while True:
+            time.sleep(1)
+            filenames_splitted = [re.split(r"\.", x) for x in self.find_filenames(r".*", path)] 
+            filenames_splitted = [ splitted[0:(len(splitted)-1)] for splitted in filenames_splitted ]
+            filenames = [ default_lower(clear_accents(".".join(splitted))) for splitted in filenames_splitted ]
+            print(f"\tfilenames: {filenames}")
+            for name in filenames:
+                if waiting_function(name): return True;
+            attempts -= 1
+            if attempts <= 0: raise ValueError(f"O tempo de espera esgotou do arquivo")
 
     def create_dir(self, relative_path):
         Path(os.path.realpath(Directory.separator(f"{self.path}/{relative_path}"))).mkdir(parents=True, exist_ok=True)

@@ -409,3 +409,6 @@ class DriverActions():
     def drag_and_drop_element(self, drag_el: WebElement, drop_el: WebElement):
         ActionChains(self.driver.get()).drag_and_drop(drag_el, drop_el).perform()
         return self;
+
+    def scroll_to_element(self, target_el: WebElement):
+        ActionChains(self.driver.get()).scroll_to_element(target_el).perform()

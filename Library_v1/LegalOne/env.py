@@ -4,6 +4,7 @@ ENV = {
     "office": "rpa2",
     "login": "regispontesti",
     "password": "U93#a%O5DOLq",
+    "env": "prod",
 }
 
 for key in ENV: os.environ[key] = ENV[key]

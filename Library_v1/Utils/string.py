@@ -18,6 +18,9 @@ def default_lower(name):
     converted = default_space(name);
     return converted.lower();
 
+def remove_spaces(name: str):
+    return re.sub(r"\s", "", name)
+
 def constant_name(name):
     return re.sub(r'([\s ]+)', '', default_upper(name), flags=re.IGNORECASE);
 
@@ -59,6 +62,15 @@ def sub_latin_caracters(content: str, repl: str):
 def create_regex_latin_str(name):
     name_formatted = sub_latin_caracters(default_space(re.sub(r'(?<= )(do|da|de|dos|das|ou|e|a|o|i|u|&|as|os)(?= )', ' ', name, flags=re.IGNORECASE)), ".")
     name_formatted = re.sub(r"[\'\(\)\[\]_\+\-\/\\\-\+\.\º,;\?]", ".", name_formatted)
+    regex = r"^\s*" + re.sub(r"\s", r".+?", name_formatted) + r"\s*$"
+    return regex
+
+def remove_special_character(name):
+    return re.sub(r"[\'\(\)\[\]_\+\-\/\\\-\+\.\º,;\?\!\$\&\*\=]", "", name)
+
+def create_regex_lowercase_str(name):
+    name_formatted = default_lower(clear_accents(name))
+    name_formatted = re.sub(r"[\'\(\)\[\]_\+\-\/\\\-\+\.\º,;\?\!\$\&\*\=]", ".", name_formatted)
     regex = r"^\s*" + re.sub(r"\s", r".+?", name_formatted) + r"\s*$"
     return regex
 

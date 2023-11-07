@@ -2,7 +2,12 @@ from Library_v1.LegalOne.Fields.DropdownField import DropdownField
 from Library_v1.Driver.DriverInterface import DriverInterface
 from Library_v1.Driver.DriverActions import DriverActions
 import re
-from Utils.string import (default_space, default_lower, clear_accents, search_into_str_i, )
+from Library_v1.Utils.string import (
+    default_space, 
+    default_lower, 
+    clear_accents, 
+    search_into_str_i, 
+)
 
 class DropdownMultiLevelSelectionField(DropdownField):
     def __init__(self, driver: DriverInterface, dropdown_xpath: str) -> None:
