@@ -61,10 +61,13 @@ class Directory():
     def has_path(self, ) -> bool:
         return not self.get_path() is None;
 
-    def move_file(self, filepath: str):
+    def move_file(self, filepath: str, new_filename: str = None):
         if filepath is None: raise NameError("Não identificado o caminho do arquivo")
         name = re.sub(r".*(\\|\/)", '', filepath)
-        new_filepath = f"{self.get_path()}/{name}"
+        if new_filename is None:
+            new_filepath = f"{self.get_path()}/{name}"
+        else:
+            new_filepath = f"{self.get_path()}/{new_filename}"
         Path(filepath).rename(new_filepath)
         return new_filepath;
     
