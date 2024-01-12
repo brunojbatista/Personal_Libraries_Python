@@ -81,3 +81,6 @@ def search_into_str_i(searched_str: str, search_str: str) -> int:
 
 def format_folder_windows(name: str):
     return re.sub(r"[\\\/]", ".", re.sub(r'[\u0300-\u036f]', '', ud.normalize("NFD", name)));
+
+def format_filename_windows(name: str, caract_sub="_"):
+    return re.sub(r"[<>:\"\/\\|?*]+", caract_sub, name); 
