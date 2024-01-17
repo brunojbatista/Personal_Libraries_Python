@@ -137,3 +137,11 @@ class Directory():
     def get_realpath(path):
         return os.path.realpath(Directory.separator(path))
     
+    def count_files(self, ):
+        return len(self.find_files(r".*"))
+
+    def remove_files(self, search_regex, path = None):
+        filepaths = self.find_files(search_regex, path)
+        print(f"remove_files: {filepaths}")
+        for filepath in filepaths:
+            os.remove(filepath)
