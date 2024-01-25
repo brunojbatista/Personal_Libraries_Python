@@ -74,6 +74,15 @@ def create_regex_lowercase_str(name):
     regex = r"^\s*" + re.sub(r"\s", r".+?", name_formatted) + r"\s*$"
     return regex
 
+def create_regex_filename_windows(name, extension = None):
+    name_formatted = default_lower(clear_accents(name))
+    name_formatted = re.sub(r"[\'\(\)\[\]_\+\-\/\\\-\+\.\º,;\?\!\$\&\*\=]", ".", name_formatted)
+    if not extension is None: 
+        regex =  r"^\s*" + re.sub(r"\s", r".+?", name_formatted) + r"\s*(\(\d+\))?\s*" + "\." + default_lower(clear_accents(extension)) + "$"
+    else:
+        regex = r"^\s*" + re.sub(r"\s", r".+?", name_formatted) + r"\s*(\(\d+\))?\s*$"
+    return regex
+
 def search_into_str_i(searched_str: str, search_str: str) -> int:
     searched_dafeult = default_lower(default_space(clear_accents(searched_str)))
     search_default = default_lower(default_space(clear_accents(search_str)))
