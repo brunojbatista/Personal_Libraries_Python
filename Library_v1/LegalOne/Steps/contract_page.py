@@ -22,6 +22,7 @@ def download_geds(driver: DriverInterface, geds: list):
         name = ged['name']
         actions.navigate_url(link)
         regex = create_regex_lowercase_str(name)
+        print(f"regex file: {regex}")
         dir.wait_filename(lambda filename: re.search(regex, filename))
     return dir.find_files(r".*")
 
@@ -38,12 +39,13 @@ def get_geds_by_file_type(driver: DriverInterface, contract_id: str, *types):
     return ged_filtered
 
 def check_file_type(geds: list, *types):
-    remain_types = [clear_accents(x) for x in types]
+    types = [clear_accents(x) for x in types]
+    remain_types = types
     for ged in geds:
         type_file = clear_accents(ged['type_file'])
         if type_file in types:
             remain_types.remove(type_file)
-    if len(remain_types) > 0: raise ValueError(f"Não foram encontrados o seguintes tipos de arquivos: {', '.join(remain_types)}")
+    if len(remain_types) > 0: raise ValueError(f"Não foram encontrados o seguintes tipos(s) de arquivo(s) {', '.join(remain_types)}")
     return True;
 
 def change_situation_contract(driver: DriverInterface, contract_id: str, situation: str):
@@ -54,3 +56,8 @@ def change_situation_contract(driver: DriverInterface, contract_id: str, situati
     actions.click_button_save_close()
     # actions.sleep(3600)
 
+def add_progress_contract(driver: DriverInterface, contract_id: str, progress_list: list):
+    actions = ContractActions(driver)
+    actions.navigate_url_contract(contract_id)
+    actions.click_tab('Andamentos')
+    actions.click_new_progress()

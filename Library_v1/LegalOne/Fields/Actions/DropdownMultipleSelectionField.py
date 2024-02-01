@@ -12,6 +12,7 @@ class DropdownMultipleSelectionField(DropdownField):
     def set_value(self, *values):
         # print(f"values: {values}")
         if len(values) <= 0: raise ValueError("É preciso de ao menos uma entrada para o dropdown")
+        print(f"values: {values}")
         # ---------------------------------------------------------
         # Definiçao dos xpaths
         input_xpath = f"{self.get_xpath()}//input[@type='text']"
@@ -31,12 +32,20 @@ class DropdownMultipleSelectionField(DropdownField):
             selected_inputs = []
         remove_entries  = [i for i in selected_inputs if i[0] not in values]
         only_values = []
-        if len(selected_inputs) > 0: only_values = [x for x in selected_inputs[0]]
-        missing_entries = [i for i in values if i not in only_values]
+        selected_situations = [x[0] for x in selected_inputs]
+        missing_entries = [x for x in values if x not in selected_situations]
+        # for situation, data_id in selected_inputs:
 
-        # print(f"missing_entries: {missing_entries}")
-        # print(f"remove_entries: {remove_entries}")
-        # print(f"selected_inputs: {selected_inputs}")
+            
+        # if len(selected_inputs) > 0: only_values = [x for x in selected_inputs[0]]
+        # missing_entries = [i for i in values if i not in only_values]
+
+        print(f"selected_inputs: {selected_inputs}")
+        print(f"remove_entries: {remove_entries}")
+        print(f"only_values: {only_values}")
+        print(f"missing_entries: {missing_entries}")
+
+        # self.action.sleep(3600)
        
         self.action.press_enter(input_xpath)
         self.action.disappear_element(lookup_loading_xpath)
@@ -45,7 +54,10 @@ class DropdownMultipleSelectionField(DropdownField):
         # Remover os que estão selecionados
         for _, data_id in remove_entries:
             exclude_xpath = f"({lookup_dropdown_xpath})//div[@class='lookup-selection-inner-wrapper']/div[@data-val-id='{data_id}']/div[contains(@class, 'exclude-button')]"
+            print(f"exclude_xpath: {exclude_xpath}")
             self.action.click_element_by_js(exclude_xpath)
+
+        # self.action.sleep(3600)
 
         # -------------------------------------------
         # Selecionar as entradas que estão faltando
@@ -65,10 +77,14 @@ class DropdownMultipleSelectionField(DropdownField):
             if not has_found: 
                 self.action.click_element(lookup_show_xpath)
                 raise ValueError(f"Não foi encontrado a busca de '{missing_entry}'")
+            
         try:
             selected_items = [self.action.get_attr(el, 'value') for el in self.action.get_elements(items_xpath, time=0)]
         except Exception:
             selected_items = []
         if re.search(r"display\s*\:\s*block", self.action.get_attr(lookup_dropdown_xpath, 'style'), flags=re.I):
             self.action.click_element(lookup_show_xpath)
+        
+        # print(f"selected_inputs: {selected_inputs}")
+        # self.action.sleep(3600)
         return selected_items;

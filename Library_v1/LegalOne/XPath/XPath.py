@@ -33,6 +33,8 @@ class XPath():
                     "save_close_button": "//button[text()='Salvar e fechar']",
                     "save_new_button": "//button[text()='Salvar e novo']",
                     "cancel_button": "//div[contains(@class, 'footer-buttons')]/a[contains(text(), 'Cancelar')]",
+
+                    "new_progress": "//div[@id='popovermenus']//a[text()='Novo andamento']",
                 }
             }
 

@@ -64,6 +64,9 @@ class ContractActions(LegalOneActions):
                 self.disappear_element(self.xpath.get("loading"))
         return self;
 
+    def click_new_progress(self, ):
+        self.click_element(self.xpath.get("new_progress"))
+
     def read_table_elements(self, ) -> list:
         return self.get_elements(self.xpath.get("tabela_resultados"))
 
