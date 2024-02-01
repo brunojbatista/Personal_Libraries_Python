@@ -9,7 +9,6 @@ from Library_v1.Utils.string import (
     clear_accents,
     default_lower,
 )
-import stat
 
 """
     Implementar uma função para buscar os arquivos dentro do diretório através de regex
@@ -31,6 +30,7 @@ class Directory():
 
     def set_path(self, ):
         if self.is_dir(): self.fullpath = os.path.realpath(self.path);
+        print(f"self.fullpath: {self.fullpath}")
 
     def get_path(self, ):
         return self.fullpath;
@@ -61,13 +61,10 @@ class Directory():
     def has_path(self, ) -> bool:
         return not self.get_path() is None;
 
-    def move_file(self, filepath: str, new_filename: str = None):
+    def move_file(self, filepath: str):
         if filepath is None: raise NameError("Não identificado o caminho do arquivo")
         name = re.sub(r".*(\\|\/)", '', filepath)
-        if new_filename is None:
-            new_filepath = f"{self.get_path()}/{name}"
-        else:
-            new_filepath = f"{self.get_path()}/{new_filename}"
+        new_filepath = f"{self.get_path()}/{name}"
         Path(filepath).rename(new_filepath)
         return new_filepath;
     
@@ -79,7 +76,7 @@ class Directory():
         for root, dirs, files in os.walk(self.path):
             if path != root: continue;
             for file in files:
-                if re.search(searched_name, clear_accents(file), flags=re.I):
+                if re.search(searched_name, file, flags=re.I):
                     file_target = os.path.realpath(Directory.separator(f"{path}/{file}"))
                 if not file_target is None: break;
             if not file_target is None: break;
@@ -108,7 +105,7 @@ class Directory():
         for root, dirs, files in os.walk(self.path):
             if path != root: continue;
             for file in files:
-                if re.search(search_regex, clear_accents(file), flags=re.I):
+                if re.search(search_regex, file, flags=re.I):
                     filepaths.append(os.path.realpath(Directory.separator(f"{path}/{file}")))
         return filepaths;
 
@@ -118,11 +115,14 @@ class Directory():
         return filenames
     
     def wait_filename(self, waiting_function: callable, path = None, attempts: int = 60):
+        print("="*80)
+        print(">> wait_filename:")
         while True:
             time.sleep(1)
             filenames_splitted = [re.split(r"\.", x) for x in self.find_filenames(r".*", path)] 
             filenames_splitted = [ splitted[0:(len(splitted)-1)] for splitted in filenames_splitted ]
             filenames = [ default_lower(clear_accents(".".join(splitted))) for splitted in filenames_splitted ]
+            print(f"\tfilenames: {filenames}")
             for name in filenames:
                 if waiting_function(name): return True;
             attempts -= 1
@@ -134,29 +134,3 @@ class Directory():
     def get_realpath(path):
         return os.path.realpath(Directory.separator(path))
     
-    def count_files(self, ):
-        return len(self.find_files(r".*"))
-
-    def remove_files(self, search_regex, path = None):
-        filepaths = self.find_files(search_regex, path)
-        for filepath in filepaths:
-            os.remove(filepath)
-
-    def ready_file(self, search_regex, path = None, timeout=180):
-        filepath = None;
-        step_time = 0.5;
-        while (timeout > 0):
-            time.sleep(step_time);
-            timeout = timeout - step_time;
-            filepath = self.find_file(search_regex, path);
-            if filepath is None: continue;
-            try:
-                with open(filepath) as fp:
-                    fp.close();
-                    length = os.path.getsize(filepath);
-                    if (length <= 0): continue;
-            except IOError:
-                continue;
-            break;
-        if (filepath == None): raise ValueError("O arquivo não está pronto");
-        return filepath;
