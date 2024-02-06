@@ -363,12 +363,13 @@ class DriverActions():
     
     # ==========================================================================================
     def force_click_element(self, xpath_or_webelement: str|WebElement, time: int = 60):
-        attempts = 20
+        waitingTime = 0.5
+        attempts = time/waitingTime
         has_finished = False
         while True:
             if attempts <= 0: break;
             try:
-                self.sleep(0.5)
+                self.sleep(waitingTime)
                 self.click_element(xpath_or_webelement, time)
                 has_finished = True;
                 break;
@@ -378,12 +379,13 @@ class DriverActions():
         if not has_finished: raise ValueError("A tentativa de forçar o clique não funcionou")
 
     def force_write_element(self, xpath_or_webelement: str|WebElement, time: int = 60):
-        attempts = 60
+        waitingTime = 1
+        attempts = time/waitingTime
         has_finished = False
         while True:
             if attempts <= 0: break;
             try:
-                self.sleep(1)
+                self.sleep(waitingTime)
                 self.write_element(xpath_or_webelement, time)
                 has_finished = True;
                 break;

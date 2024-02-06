@@ -80,13 +80,13 @@ class ChromeDriver(DriverInterface):
         # Buscando do webdriver do chrome
         d = Directory("Library_v1/Driver/browsers/chrome/current")
         filepath = d.find_file(f"\.exe$");
-        if filepath is None: raise ValueError("Não foi encontrado o webdriver do google chrome")
 
         # -------------------------------------------------
         # Setando as opções
         self.options = Options()
         self.options.add_experimental_option("prefs", self.options_browser)
         self.options.page_load_strategy = 'normal'
+        # self.options.page_load_strategy = 'eager'
         self.options.add_argument("--start-maximized")
         self.options.add_argument("--disable-notifications")
         self.options.add_argument('--no-sandbox')
@@ -102,12 +102,26 @@ class ChromeDriver(DriverInterface):
 
         # -------------------------------------------------
         # Abrindo a instância do webdriver
-        self.driver = Chrome(
-            service=ChromeService(ChromeDriverManager().install()), 
-            options=self.options
-        )
+        # self.driver = Chrome(
+        #     service=ChromeService(ChromeDriverManager().install()), 
+        #     options=self.options
+        # )
 
-        self.driver.maximize_window()
+        # -------------------------------------------------
+        # Escolha do executável
+        if filepath:
+            self.driver = Chrome(
+                service=ChromeService(executable_path=filepath), 
+                options=self.options
+            )
+        else:
+            self.driver = Chrome(
+                service=ChromeService(ChromeDriverManager().install()), 
+                options=self.options
+            )
+            
+
+        # self.driver.maximize_window()
 
     def get(self, ):
         return self.driver;
